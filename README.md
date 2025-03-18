@@ -5,6 +5,14 @@ A collection of essential design patterns for software development using practic
 > [!TIP]
 > This information is meant to help developers understand and implement these patterns to write more efficient and maintainable code.
 
+## Contents
+
+- [Patterns](#patterns)
+  - [Creational](#creational)
+  - [Structural](#structural)
+  - [Behavioral](#behavioral)
+- [Contributing Guidelines](CONTRIBUTING.md)
+
 ## Patterns
 
 ### Creational
