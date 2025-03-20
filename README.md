@@ -8,10 +8,7 @@ A collection of essential design patterns for software development using practic
 ## Contents
 
 - [Patterns](#patterns)
-  - [Creational](#creational)
-  - [Structural](#structural)
-  - [Behavioral](#behavioral)
-- [Contributing Guidelines](CONTRIBUTING.md)
+- [Contribution Guidelines](CONTRIBUTING.md)
 
 ## Patterns
 
