@@ -4,8 +4,36 @@ A collection of essential design patterns for software development using practic
 
 ## Contents
 
+- [Quick Start Guide](#quick-start-guide)
 - [Patterns](#patterns)
 - [Contribution Guidelines](CONTRIBUTING.md)
+
+## Quick Start Guide
+
+**Not sure which pattern to use?** Here's a quick reference:
+
+| Problem                               | Pattern                     | Use When                                                           |
+| ------------------------------------- | --------------------------- | ------------------------------------------------------------------ |
+| Need exactly one instance             | [Singleton](#patterns)      | App needs a single shared resource (logger, config, DB)            |
+| Creating many similar objects         | [Factory Method](#patterns) | You have multiple types but want to hide the "new" keyword         |
+| Building complex objects step-by-step | [Builder](#patterns)        | Objects have many optional parameters or complex setup             |
+| Multiple ways to do something         | [Strategy](#patterns)       | Algorithm choice varies; avoid massive if/else chains              |
+| Adding features to objects            | [Decorator](#patterns)      | Wrapping objects with additional behavior (Java: logging, caching) |
+| Simplifying complex systems           | [Facade](#patterns)         | Hide complexity of subsystems behind simple interface              |
+| Working with tree/hierarchy           | [Composite](#patterns)      | Folders/files, UI components, organization trees                   |
+| Existing code doesn't match           | [Adapter](#patterns)        | Integrating legacy code or third-party libraries                   |
+| Tracking changes to objects           | [Observer](#patterns)       | Event listeners, pub/sub systems, state changes                    |
+| Different behavior per state          | [State](#patterns)          | Objects behave differently based on internal state                 |
+
+**Learning Path (Recommended Order):**
+
+1. **Singleton** - Simplest; one instance only
+2. **Factory Method** - Essential for object creation
+3. **Observer** - Critical for event-driven code
+4. **Strategy** - Powerful alternative to conditionals
+5. **Decorator** - Advanced object enhancement
+6. **Builder** - For complex object construction
+7. **Others** - Build on these fundamentals
 
 ## Patterns
 
