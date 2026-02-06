@@ -4,7 +4,7 @@ The Adapter pattern allows incompatible interfaces to work together by providing
 
 ## When to Use
 
-**Use Adapter for:**
+✅ **Use Adapter for:**
 
 - Integrating third-party libraries
 - Working with legacy code
@@ -12,7 +12,7 @@ The Adapter pattern allows incompatible interfaces to work together by providing
 - Data format conversions
 - Cross-platform compatibility
 
-**Avoid Adapter for:**
+❌ **Avoid Adapter for:**
 
 - Simple type conversions (use built-in methods)
 - When you can modify source code

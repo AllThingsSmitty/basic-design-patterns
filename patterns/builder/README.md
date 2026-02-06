@@ -4,7 +4,7 @@ The Builder pattern separates the construction of a complex object from its repr
 
 ## When to Use
 
-**Use Builder for:**
+✅ **Use Builder for:**
 
 - Objects with many optional parameters
 - Objects that require step-by-step construction
@@ -12,7 +12,7 @@ The Builder pattern separates the construction of a complex object from its repr
 - Configuration objects with fluent interfaces
 - Complex initialization logic
 
-**Avoid Builder for:**
+❌ **Avoid Builder for:**
 
 - Simple objects with few required parameters
 - When you'd rather use default arguments

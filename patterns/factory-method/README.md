@@ -12,7 +12,7 @@ The Factory Method pattern lets a class defer instantiation to subclasses. It de
 - Centralizing object creation
 - When many similar objects need custom initialization
 
-**Avoid Factory Method for:**
+❌ **Avoid Factory Method for:**
 
 - Simple objects with just one type (use direct constructor)
 - Cases where a simple config object would work
