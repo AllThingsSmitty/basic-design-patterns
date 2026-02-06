@@ -12,7 +12,7 @@ The Strategy pattern allows you to define a family of algorithms, encapsulate ea
 - Payment methods, sorting algorithms, shipping costs
 - Reducing coupling between components
 
-**Avoid Strategy for:**
+❌ **Avoid Strategy for:**
 
 - Single algorithm (unnecessary complexity)
 - Simple boolean conditionals

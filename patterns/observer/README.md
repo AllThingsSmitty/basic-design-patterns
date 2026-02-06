@@ -12,7 +12,7 @@ The Observer pattern is a behavioral design pattern where an object (the subject
 - Form validation feedback
 - State management in applications
 
-**Avoid Observer for:**
+❌ **Avoid Observer for:**
 
 - Simple one-time callbacks (use Promises)
 - Synchronous operations only (consider async patterns)

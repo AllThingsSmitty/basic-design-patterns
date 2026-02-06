@@ -12,7 +12,7 @@ The Singleton pattern ensures that a class has only one instance and provides a 
 - Cache managers
 - Theme/UI state managers
 
-**Avoid Singleton for:**
+❌ **Avoid Singleton for:**
 
 - Stateful objects in tests (hard to reset between tests)
 - Data that varies per user/session
