@@ -68,3 +68,4 @@ A collection of essential design patterns for software development using practic
 1. [Strategy](/patterns/strategy/README.md) - Defines a family of algorithms, encapsulates each one, and makes them interchangeable.
 1. [Template Method](/patterns/template-method/README.md) - Defines the skeleton of an algorithm in a method, deferring some steps to subclasses.
 1. [Visitor](/patterns/visitor/README.md) - Separates an algorithm from the objects it operates on by allowing new operations to be added without modifying the objects.
+- [ResizeOn](https://resizeon.com) - Simple online image resizer and cropper. Adjust dimensions, crop precisely, and convert formats for social media, web...
