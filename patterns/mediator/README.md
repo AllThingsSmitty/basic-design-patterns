@@ -1,6 +1,6 @@
 # Mediator Pattern
 
-The Mediator pattern is used to reduce the complexity of communication between multiple objects or classes. Instead of having objects communicate directly with each other, they communicate through a mediator object.
+The Mediator pattern untangles object-to-object communication by routing everything through a central coordinator. Instead of every object knowing about every other object, they only know about the mediator.
 
 ### Example
 
@@ -85,4 +85,4 @@ colleague3.send("Good day!");
 
 ### Summary
 
-The Mediator design pattern helps manage communication between multiple objects by centralizing the communication logic in a mediator object. This reduces the dependencies between the objects, making the system easier to maintain and extend. In this example, the `Mediator` class handles the communication between instances of the `Colleague` class, ensuring that messages are sent to all colleagues except the sender.
+With 3 colleagues, direct communication would mean 6 possible connections. With 10, it's 90. The Mediator flattens that: every colleague talks to one object, and the mediator figures out who needs to hear it. Real-world examples include chat rooms, air traffic control, and UI event buses where many components need to react to each other's state.

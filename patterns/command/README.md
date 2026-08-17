@@ -1,6 +1,6 @@
 # Command Pattern
 
-The Command pattern is a behavioral design pattern that turns a request into a stand-alone object that contains all information about the request. This transformation allows for parameterizing methods with different requests, delaying or queuing a request's execution, and supporting undoable operations.
+The Command pattern wraps a request in an object, which means you can pass it around, queue it, log it, or reverse it (things you can't do when you just call a method directly). The classic use case is undo/redo.
 
 ### Example
 
@@ -109,4 +109,4 @@ The client code creates instances of the `Light`, `LightOnCommand`, and `LightOf
 
 ### Summary
 
-This code demonstrates how the Command pattern can be used to encapsulate requests as objects, allowing for parameterization, queuing, and undoable operations. The `RemoteControl` class can execute and undo commands without knowing the specifics of the `Light` class, promoting loose coupling and flexibility.
+`RemoteControl` has no idea what a `Light` is; it just holds a command and fires it. Swap the command and the remote works with anything. This loose coupling is what makes the pattern so useful for toolbars, macro systems, or any UI where actions need to be reversible or re-playable.

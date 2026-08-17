@@ -1,6 +1,6 @@
 # Proxy Pattern
 
-The Proxy pattern is used to control access to an object by placing a surrogate or placeholder object (the proxy) in front of the real object (the real subject).
+The Proxy pattern puts a stand-in in front of the real object. The caller interacts with the proxy, which can add access control, logging, caching, or lazy loading before (and after) delegating to the actual implementation.
 
 ### Example
 
@@ -61,4 +61,4 @@ proxy.request();
 
 ### Summary
 
-The Proxy pattern is used to control access to an object. In this example, the `Proxy` class controls access to the `RealSubject` by checking access and logging the request. This pattern is useful for adding additional functionality (like access control and logging) without modifying the original class.
+`RealSubject` doesn't know it's being proxied; it just handles requests. All the cross-cutting concerns (access checks, logging) live in the proxy. This keeps each class focused on one job, and you can add or change proxy behavior without ever touching the underlying implementation.

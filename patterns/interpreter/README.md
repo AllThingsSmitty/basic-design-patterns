@@ -1,12 +1,12 @@
 # Interpreter Pattern
 
-The Interpreter pattern is used to define a grammatical representation for a language and an interpreter to interpret sentences in that language.
+The Interpreter pattern is for situations where you need to evaluate expressions in a small domain-specific language. You define a grammar as a set of classes, then compose them to represent and interpret any valid expression.
 
 ### Example
 
 ```js
 class Context {
-  constructor(input) {
+  constructor(input = "") {
     this.input = input;
     this.output = 0;
   }
@@ -109,4 +109,4 @@ console.log(context.output); // Output: 12
 
 ### Summary
 
-This code defines a simple language for arithmetic expressions using the Interpreter pattern. It includes classes for numbers, addition, and subtraction, and demonstrates how to interpret a complex expression using these classes.
+Each class represents one grammar rule, and you build expressions by composing them into a tree. When you call `interpret()`, it walks that tree recursively to produce a result. The pattern shines for things like math parsers, search query languages, or rule engines: anywhere you're evaluating structured expressions.

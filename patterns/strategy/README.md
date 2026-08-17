@@ -45,6 +45,7 @@ class MultiplyStrategy extends Strategy {
   execute(a, b) {
     return a * b;
   }
+}
 
 class DivideStrategy extends Strategy {
   execute(a, b) {

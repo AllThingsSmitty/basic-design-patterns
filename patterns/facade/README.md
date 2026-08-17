@@ -1,6 +1,6 @@
 # Facade Pattern
 
-The Facade pattern provides a unified interface to a set of interfaces in a subsystem. It defines a higher-level interface that makes the subsystem easier to use.
+The Facade pattern puts a simple, clean interface in front of a messy or complex subsystem. Callers don't need to know the internals; they just use the facade.
 
 ### Example
 
@@ -86,4 +86,4 @@ computer.start();
 
 ### Summary
 
-The Facade pattern helps in reducing the complexity of the code and makes the system easier to use and understand by providing a single entry point to various subsystems.
+Instead of making callers juggle `CPU`, `Memory`, and `HardDrive` themselves, `ComputerFacade.start()` handles the coordination. If the boot sequence ever changes, you update one method, not every caller. That's the value: one clean entry point that absorbs the complexity.

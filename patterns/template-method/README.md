@@ -1,6 +1,6 @@
 # Template Method Pattern
 
-The Template Method pattern is a behavioral design pattern that defines the skeleton of an algorithm in a method, deferring some steps to subclasses. It allows subclasses to redefine certain steps of an algorithm without changing the algorithm's structure.
+The Template Method pattern locks down the structure of an algorithm in a base class but lets subclasses fill in the specific steps. The "template" is the fixed sequence; the blanks are what change between implementations.
 
 ### Example
 
@@ -94,4 +94,4 @@ jsonProcessor.process();
 
 ### Summary
 
-The Template Method pattern is useful when you have an algorithm that consists of several steps, and you want to allow subclasses to provide specific implementations for some of those steps while keeping the overall structure intact.
+`process()` always runs `loadData → processData → saveData` in that order: the sequence is guaranteed by the base class. Subclasses only care about their specific steps, not the overall flow. It's a simple way to enforce a pipeline without duplicating the orchestration logic in every implementation.

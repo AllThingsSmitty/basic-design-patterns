@@ -1,6 +1,6 @@
 # Memento Pattern
 
-The Memento pattern is used to capture and externalize an object's internal state so that it can be restored later without violating encapsulation. This is useful for implementing features like undo/redo functionality.
+The Memento pattern lets an object save and restore its own state without exposing that state to the outside world. It's the backbone of undo/redo: the object stays in control of what gets snapshotted and how it's restored.
 
 ### Example
 
@@ -77,7 +77,7 @@ class Caretaker {
    - **add(memento):** Adds a `Memento` to the list.
    - **get(index):** Retrieves a `Memento` from the list by index.
 
-# Usage
+### Usage
 
 ```js
 const originator = new Originator();
@@ -106,4 +106,4 @@ console.log("Second saved State:", originator.state);
 
 ### Summary
 
-The `Originator` class can save its state to a `Memento` object and restore it later. The `Caretaker` class manages these `Memento` objects, allowing the `Originator` to revert to previous states. The Memento pattern is useful for scenarios where you need to implement undo/redo functionality.
+The three-role split keeps things clean: `Originator` knows its own state, `Memento` holds a snapshot of it, and `Caretaker` manages the list of snapshots. The caretaker never peeks inside a memento; it just stores and retrieves them. That's what makes this encapsulation-friendly compared to other undo approaches.

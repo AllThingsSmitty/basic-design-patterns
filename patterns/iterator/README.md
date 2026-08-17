@@ -1,6 +1,6 @@
 # Iterator Pattern
 
-The Iterator pattern provides a way to access the elements of an aggregate object sequentially without exposing its underlying representation.
+The Iterator pattern lets you walk through a collection without needing to know how it's stored internally (array, linked list, tree). The collection hands you an iterator, and you just call `next()`.
 
 ### Example
 
@@ -61,4 +61,4 @@ while (iterator.hasNext()) {
 
 ### Summary
 
-This code defines an Iterator class to traverse a collection and an `IterableCollection` class to create an iterator for its items.
+The iterator keeps all traversal state (the current index) out of the collection itself. That means you can have multiple iterators on the same collection at the same time without them interfering. Worth noting: in modern JavaScript you'd usually use a generator or the built-in `Symbol.iterator` protocol, but rolling your own like this makes the mechanics easy to see.

@@ -1,6 +1,6 @@
 # Chain-of-Responsibility Pattern
 
-The Chain-of-Responsibility pattern allows for flexible and scalable handling of requests. The following code implements a simple example of the pattern in JavaScript to simulate an ATM dispensing different denominations of bills
+The Chain-of-Responsibility pattern passes a request along a chain of handlers, where each one either handles it or forwards it to the next. This example simulates an ATM dispensing bills across different denominations.
 
 ### Example
 
@@ -47,32 +47,32 @@ class Dispenser {
 
 **Chain of Responsibility**
 
-The dispensers are linked in a chain where each dispenser handles a specific denomination:
+The dispensers are linked largest-to-smallest so the ATM always tries to give the fewest bills:
 
-- `dispenser5` handles $5 bills.
-- `dispenser10` handles $10 bills.
-- `dispenser20` handles $20 bills.
-- `dispenser50` handles $50 bills.
+- `dispenser50` handles $50 bills first.
+- `dispenser20` handles $20 bills next.
+- `dispenser10` handles $10 bills next.
+- `dispenser5` handles the remaining $5 bills last.
 
 **Execution Flow**
 
-1. A `Request` object is created with an amount of 135.
-2. The `handle` method of `dispenser5` is called with the request.
-3. `dispenser5` dispenses as many $5 bills as possible and passes the remaining amount to `dispenser10`.
-4. `dispenser10` dispenses as many $10 bills as possible and passes the remaining amount to `dispenser20`.
-5. `dispenser20` dispenses as many $20 bills as possible and passes the remaining amount to `dispenser50`.
-6. `dispenser50` dispenses as many $50 bills as possible.
+1. A `Request` object is created with an amount of $85.
+2. The `handle` method of `dispenser50` is called with the request.
+3. `dispenser50` dispenses as many $50 bills as possible and passes the remainder to `dispenser20`.
+4. `dispenser20` dispenses as many $20 bills as possible and passes the remainder to `dispenser10`.
+5. `dispenser10` dispenses as many $10 bills as possible and passes the remainder to `dispenser5`.
+6. `dispenser5` dispenses the remaining amount in $5 bills.
 
 ### Usage
 
 ```js
-const dispenser50 = new Dispenser(50, null);
-const dispenser20 = new Dispenser(20, dispenser50);
-const dispenser10 = new Dispenser(10, dispenser20);
-const dispenser5 = new Dispenser(5, dispenser10);
+const dispenser5 = new Dispenser(5, null);
+const dispenser10 = new Dispenser(10, dispenser5);
+const dispenser20 = new Dispenser(20, dispenser10);
+const dispenser50 = new Dispenser(50, dispenser20);
 
-const request = new Request(135);
-dispenser5.handle(request);
+const request = new Request(85);
+dispenser50.handle(request);
 ```
 
 ### Output
@@ -80,12 +80,12 @@ dispenser5.handle(request);
 The console will display the number of bills dispensed for each denomination:
 
 ```
-Dispense 1 $5 bills
-Dispense 1 $10 bills
-Dispense 1 $20 bills
 Dispense 1 $50 bills
+Dispense 1 $20 bills
+Dispense 1 $10 bills
+Dispense 1 $5 bills
 ```
 
 ### Summary
 
-The Chain-of-Responsibility pattern used here creates a chain of dispensers that handle different denominations of bills. Each dispenser processes the request for its denomination and passes the remaining amount to the next dispenser in the chain. This pattern allows for flexible and scalable handling of requests.
+Each dispenser handles its denomination and passes the remainder down the chain. That separation of concerns is the whole point of Chain-of-Responsibility: adding a new denomination (say, $100 bills) means plugging in a new handler at the front, with zero changes to the rest of the chain.

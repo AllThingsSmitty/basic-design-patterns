@@ -1,6 +1,6 @@
 # Flyweight Pattern
 
-The Flyweight pattern is used to minimize memory usage by sharing as much data as possible with similar objects.
+The Flyweight pattern reduces memory by sharing data that's common across many objects. Instead of each object storing its own copy of the same values, they all point to a single shared instance.
 
 ### Example
 
@@ -32,21 +32,22 @@ class FlyweightFactory {
 }
 
 class Computer {
-  constructor(make, model, processor, memory, tag) {
-    this.flyweight = FlyweightFactory.get(make, model, processor);
+  constructor(make, model, processor, memory, tag, factory) {
+    this.flyweight = factory.get(make, model, processor);
     this.memory = memory;
     this.tag = tag;
   }
 }
 
 class ComputerCollection {
-  constructor() {
+  constructor(factory) {
     this.computers = {};
     this.count = 0;
+    this.factory = factory;
   }
 
   add(make, model, processor, memory, tag) {
-    this.computers[tag] = new Computer(make, model, processor, memory, tag);
+    this.computers[tag] = new Computer(make, model, processor, memory, tag, this.factory);
     this.count++;
   }
 
@@ -76,7 +77,7 @@ class ComputerCollection {
 3. **`Computer`:**
 
    - Represents the full object, which includes both shared (flyweight) and unique parts.
-   - Constructor initializes the flyweight part using `FlyweightFactory.get` and also initializes unique properties like `memory` and `tag`.
+   - Constructor receives the `factory` instance and calls `factory.get()` to retrieve or create the shared flyweight. Unique properties like `memory` and `tag` are stored separately.
 
 4. **`ComputerCollection`:**
 
@@ -89,22 +90,21 @@ class ComputerCollection {
 
 ```js
 const factory = new FlyweightFactory();
-const computers = new ComputerCollection();
+const computers = new ComputerCollection(factory);
 
 computers.add("Dell", "XPS", "Intel", "16GB", "1");
 computers.add("Dell", "XPS", "Intel", "8GB", "2");
 computers.add("HP", "Envy", "AMD", "16GB", "3");
 computers.add("HP", "Envy", "AMD", "8GB", "4");
 
-console.log(`Computers: ${computers.getCount()}`);
-console.log(`Flyweights: ${factory.getCount()}`);
+console.log(`Computers: ${computers.getCount()}`); // 4
+console.log(`Flyweights: ${factory.getCount()}`);  // 2 (Dell-XPS-Intel, HP-Envy-AMD)
 ```
 
-- A `FlyweightFactory` instance is created to manage flyweights.
-- A `ComputerCollection` instance is created to manage computers.
-- Several computers are added to the collection with varying memory and tags but shared make, model, and processor.
-- The total number of computers and flyweights are logged to the console.
+- A `FlyweightFactory` instance is created and passed into `ComputerCollection`, which threads it through to each `Computer`.
+- Four computers are added: two Dell XPS (Intel) and two HP Envy (AMD), each with different memory configs.
+- Even though there are 4 computers, only 2 flyweights are created: the shared make/model/processor data is stored once and reused.
 
 ### Summary
 
-The Flyweight pattern is effectively used here to reduce memory usage by sharing common data (make, model, processor) among multiple `Computer` objects. The `FlyweightFactory` ensures that only one instance of each unique combination of make, model, and processor is created and reused. This pattern is particularly useful when dealing with a large number of objects that share common data.
+With 4 computers but only 2 flyweights, you can see the pattern working: make, model, and processor are stored once per unique combination, while memory and tag (the parts that actually differ) stay on each individual `Computer`. This scales well when you have thousands of objects with lots of shared state.

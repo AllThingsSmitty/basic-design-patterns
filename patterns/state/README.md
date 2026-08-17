@@ -1,6 +1,6 @@
 # State Pattern
 
-The State pattern allows an object to change its behavior when its internal state changes. It is particularly useful for implementing state machines or managing state-dependent behavior.
+The State pattern lets an object behave differently depending on its current state, without cluttering the object itself with conditionals. Each state gets its own class, and the object just delegates to whichever one is active.
 
 ### Example
 
@@ -53,7 +53,7 @@ class Context {
 2. **Concrete States**
 
    - `ConcreteStateA` and `ConcreteStateB` are concrete implementations of the `State` interface.
-   - Each concrete state implements the `handle` method, which performs actions specific to that state and
+   - Each concrete state implements the `handle` method, which performs an action and transitions the context to the next state.
 
 3. **Context**
 
@@ -70,8 +70,8 @@ context.request(); // State B handling request. State changed to ConcreteStateA
 ```
 
 - A `Context` object is created with an initial state (`ConcreteStateA`).
-- Calling `reques` on the context triggers the current state's `handle method`, which performs an action and transitions to the next state.
+- Calling `request()` on the context triggers the current state's `handle` method, which performs an action and transitions to the next state.
 
 ### Summary
 
-This code defines a `State` interface and two concrete states (`ConcreteStateA` and `ConcreteStateB`). The `Context` class maintains the current state and delegates state-specific behavior to the current state object. The state transitions are managed within the `handle` methods of the concrete states, allowing the context to change its behavior dynamically.
+State transitions happen inside the state classes themselves: `ConcreteStateA.handle()` decides to transition to B, and vice versa. The `Context` never contains transition logic; it just calls `request()` and lets the active state figure out what happens next. This is what keeps `Context` clean when the number of states grows.

@@ -1,6 +1,6 @@
-# Visitor
+# Visitor Pattern
 
-The Visitor pattern allows you to add further operations to objects without having to modify them. It separates an algorithm from the object structure on which it operates.
+The Visitor pattern lets you add new operations to a set of classes without touching those classes. You put the new behavior in a visitor, and each element just knows how to accept one.
 
 ### Example
 
@@ -91,8 +91,8 @@ elements.forEach((element) => {
 });
 ```
 
-- This code creates instances of the concrete elements and visitors., then iterates over the elements, allowing each visitor to visit each element.
+- This code creates instances of the concrete elements and visitors, then iterates over the elements allowing each visitor to visit each element.
 
 ### Summary
 
-The Visitor pattern allows you to define new operations on objects without changing the classes of the elements on which it operates. In this example, `ConcreteVisitor1` and `ConcreteVisitor2` can perform operations on `ConcreteElementA` and `ConcreteElementB` without modifying their classes. The `accept` method in each element class ensures that the correct visit method is called on the visitor. This pattern is useful for adding new operations to a class hierarchy without altering the existing code.
+The `accept` method is the key: it's what enables double dispatch. When an element calls `visitor.visitConcreteElementA(this)`, both the element type and the visitor type are known at that point, so the right method runs every time. Adding a third visitor (say, a serializer) means zero changes to the element classes.

@@ -1,6 +1,6 @@
 # Bridge Pattern
 
-The Bridge pattern is used to separate an abstraction from its implementation, allowing them to vary independently. Here's a breakdown of the key components:
+The Bridge pattern separates *what* something does (the abstraction) from *how* it does it (the implementation), so both sides can evolve without stepping on each other.
 
 ### Example
 
@@ -112,11 +112,4 @@ console.log(radio.getVolume()); // 0
 
 ### Summary
 
-This pattern decouples an abstraction (`RemoteControl`) from its implementation (`Device`) so that the two can vary independently.
-
-- `RemoteControl` is the abstraction that interacts with a `Device`.
-- `AdvancedRemoteControl` is a refined abstraction that adds more functionality.
-- `Device` is the implementor that defines the interface for concrete devices.
-- `TV` and `Radio` are concrete implementors that extend `Device`.
-
-The Bridge pattern allows you to add new remote controls or devices without changing the existing code, promoting flexibility and scalability.
+`RemoteControl` and `Device` are connected through composition, not inheritance. That means you can add a new remote type (say, a `SmartphoneRemote`) without touching `TV` or `Radio`, and vice versa. Without Bridge, you'd end up with a class explosion: `TVRemoteControl`, `RadioRemoteControl`, `TVAdvancedRemoteControl`, and so on.

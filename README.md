@@ -1,6 +1,6 @@
 # Basic Design Patterns
 
-A collection of essential design patterns for software development using practical examples, such Singleton, Factory Method, Observer, and more, to help developers write more efficient and maintainable code.
+A collection of essential design patterns for software development using practical examples (Singleton, Factory Method, Observer, and more) to help you write cleaner, more maintainable code.
 
 ## Contents
 
@@ -18,7 +18,7 @@ A collection of essential design patterns for software development using practic
 | Creating many similar objects         | [Factory Method](#patterns) | You have multiple types but want to hide the "new" keyword         |
 | Building complex objects step-by-step | [Builder](#patterns)        | Objects have many optional parameters or complex setup             |
 | Multiple ways to do something         | [Strategy](#patterns)       | Algorithm choice varies; avoid massive if/else chains              |
-| Adding features to objects            | [Decorator](#patterns)      | Wrapping objects with additional behavior (Java: logging, caching) |
+| Adding features to objects            | [Decorator](#patterns)      | Wrapping objects with additional behavior (logging, caching, auth) |
 | Simplifying complex systems           | [Facade](#patterns)         | Hide complexity of subsystems behind simple interface              |
 | Working with tree/hierarchy           | [Composite](#patterns)      | Folders/files, UI components, organization trees                   |
 | Existing code doesn't match           | [Adapter](#patterns)        | Integrating legacy code or third-party libraries                   |
@@ -42,7 +42,7 @@ A collection of essential design patterns for software development using practic
 1. [Abstract Factory](/patterns/abstract-factory/README.md) - Provides an interface for creating families of related or dependent objects without specifying their concrete classes.
 1. [Builder](/patterns/builder/README.md) - Separates the construction of a complex object from its representation, allowing the same construction process to create different representations.
 1. [Factory Method](/patterns/factory-method/README.md) - Creates objects without specifying the exact class of object that will be created.
-1. [Protoype](/patterns/prototype/README.md) - Creates new objects by copying an existing object, known as the prototype.
+1. [Prototype](/patterns/prototype/README.md) - Creates new objects by copying an existing object, known as the prototype.
 1. [Singleton](/patterns/singleton/README.md) - Ensures a class has only one instance and provides a global point of access to it.
 
 ### Structural
