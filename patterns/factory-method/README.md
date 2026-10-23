@@ -55,49 +55,43 @@ class Truck {
 Similar to the `Car` class, the `Truck` class initializes a truck object with properties `doors`, `state`, and `color`. Default values are also provided using destructuring and default parameters.
 
 ```js
-// Factory class
+// Creator class: subclasses decide which product to construct
 class VehicleFactory {
-  // Method to create a vehicle based on the provided options
+  createVehicle() {
+    throw new Error("Subclasses must implement createVehicle()");
+  }
+}
+
+class CarFactory extends VehicleFactory {
   createVehicle(options) {
-    switch (options.vehicleType) {
-      // If vehicleType is "car", create a new Car
-      case "car":
-        return new Car(options);
-      // If vehicleType is "truck", create a new Truck
-      case "truck":
-        return new Truck(options);
-      // If vehicleType is not recognized, return null
-      default:
-        throw new Error(`Unknown vehicle type: ${options.vehicleType}`);
-    }
+    return new Car(options);
+  }
+}
+
+class TruckFactory extends VehicleFactory {
+  createVehicle(options) {
+    return new Truck(options);
   }
 }
 ```
 
 ## Explaining the code
 
-- The `createVehicle` method is added to the `VehicleFactory` class.
-- It takes an options object as an argument and uses a switch statement to determine which type of vehicle to create based on the `vehicleType` property.
-- If `vehicleType` is "car", it creates and returns a new `Car` object.
-- If `vehicleType` is "truck", it creates and returns a new `Truck` object.
-- If `vehicleType` is not recognized, it now throws an error (better than returning null).
+- `VehicleFactory` declares the factory method `createVehicle`.
+- `CarFactory` and `TruckFactory` override that method to construct their respective products.
+- Client code uses a concrete factory without deciding product construction through a type switch.
 
 ## Usage
 
 ```js
-const factory = new VehicleFactory();
-
-// Create a car with specified options
-const car = factory.createVehicle({
-  vehicleType: "car",
+// Each concrete factory chooses the product type
+const car = new CarFactory().createVehicle({
   doors: 4,
   color: "red",
   state: "new",
 });
 
-// Create a truck with specified options
-const truck = factory.createVehicle({
-  vehicleType: "truck",
+const truck = new TruckFactory().createVehicle({
   doors: 2,
   color: "black",
   state: "used",
@@ -107,7 +101,7 @@ console.log(car.describe()); // new car with 4 doors in red
 console.log(truck.describe()); // used truck with 2 doors in black
 ```
 
-## Real-World Example
+## Related Example: Simple Factory
 
 ```js
 class UserFactory {
@@ -134,7 +128,7 @@ console.log(admin.permissions); // ["read", "write", "delete"]
 console.log(viewer.permissions); // ["read"]
 ```
 
-## Common Mistakes
+## Common Simple Factory Mistakes
 
 ❌ **Problem:** Returning null for unknown types causes runtime errors downstream.
 
@@ -215,4 +209,4 @@ class ScalableVehicleFactory {
 
 ## Summary
 
-This pattern allows the instantiation logic to be deferred to subclasses, promoting flexibility and scalability in object creation. The Factory Method helps reduce coupling between classes and centralizes object creation logic, making code more maintainable and easier to extend when new types are needed.
+The Factory Method defers product construction to subclasses, reducing coupling between client code and concrete products. The switch-based examples above this summary are simple factories; unlike Factory Method, they choose products in one factory method based on a type value.
