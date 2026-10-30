@@ -206,23 +206,32 @@ class Coffee {
 }
 
 class MilkDecorator extends CoffeeDecorator {
-  // Only decorates cost(), but getDescription() and brew() are also needed!
+  // Inherits cost() and getDescription(), but CoffeeDecorator never forwards brew()
 }
 
 const coffee = new MilkDecorator(new Coffee());
-coffee.brew(); // Works because delegated in decorator
+coffee.brew(); // TypeError: CoffeeDecorator does not delegate brew()
 ```
 
-✅ **Solution:** Implement all methods in decorator or use a Proxy for transparent wrapping:
+✅ **Solution:** Forward the additional method through the decorator when it is part of the component API:
 
 ```js
-function decorateWithLogging(obj) {
-  return new Proxy(obj, {
-    get(target, prop) {
-      console.log(`Accessed ${String(prop)}`);
-      return target[prop];
-    },
-  });
+class CoffeeDecorator {
+  constructor(coffee) {
+    this.coffee = coffee;
+  }
+
+  cost() {
+    return this.coffee.cost();
+  }
+
+  getDescription() {
+    return this.coffee.getDescription();
+  }
+
+  brew() {
+    return this.coffee.brew();
+  }
 }
 ```
 

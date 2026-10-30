@@ -148,15 +148,14 @@ channel.publishNews("React 19 is out!");
 
 ## Common Mistakes
 
-❌ **Problem:** Memory leaks from unsubscribed observers.
+❌ **Problem:** Dropping the local reference without unsubscribing leaves the observer registered.
 
 ```js
-// Observers keep holding references even after unsubscribe
-const observer = new Observer();
+const subject = new Subject();
+let observer = new Observer();
 subject.subscribe(observer);
-subject.unsubscribe(observer);
 
-observer = null; // Might still be referenced if not properly unsubscribed
+observer = null; // The subject still holds a reference to the observer
 ```
 
 ✅ **Solution:** Ensure observers are properly unsubscribed, or use a pattern that returns an unsubscribe function:
@@ -188,8 +187,10 @@ class SafeSubject {
 }
 
 // Usage with automatic cleanup
-const unsubscribe = subject.subscribe(observer);
-unsubscribe(); // Guaranteed cleanup
+const safeSubject = new SafeSubject();
+const observer = new Observer();
+const unsubscribe = safeSubject.subscribe(observer);
+unsubscribe(); // Removes the observer from safeSubject
 ```
 
 ❌ **Problem:** Errors in one observer break notifications for others.

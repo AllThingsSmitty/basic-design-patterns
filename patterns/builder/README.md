@@ -77,7 +77,7 @@ class CarBuilder {
 
 1. **Fluent Interface:** The `CarBuilder` class uses a fluent interface, allowing method chaining. Each setter method returns the builder object itself (`this`), enabling chaining multiple method calls in a single statement.
 2. **Separation of Concerns:** The builder pattern separates the construction of a complex object (`Car`) from its representation, allowing the same construction process to create various representations.
-3. **Immutability:** Once a `Car` object is created, its properties are immutable (cannot be changed), ensuring the integrity of the object.
+3. **Independent snapshots:** The `Car` constructor copies values from the builder, so later builder changes do not change an already-built car. The sample does not make the car's properties immutable; callers can still assign to them.
 
 ## Usage
 
@@ -183,36 +183,30 @@ build() {
 }
 ```
 
-❌ **Problem:** Builders are mutable, causing shared state issues.
+❌ **Problem:** Reusing a mutable builder carries stale values into later builds.
 
 ```js
-const baseCarBuilder = new CarBuilder("Toyota", "Camry")
+const builder = new CarBuilder("Toyota", "Camry")
   .setColor("Red")
   .setEngine("V6");
 
-const car1 = baseCarBuilder.setYear(2021).build();
-const car2 = baseCarBuilder.setYear(2022).build(); // Year changed in car1 too!
+const car1 = builder.setYear(2021).build();
+const car2 = builder.setColor("Blue").build();
+
+console.log(car1.toString()); // 2021 Toyota Camry in Red with a V6 engine (unchanged)
+console.log(car2.toString()); // 2021 Toyota Camry in Blue with a V6 engine (year carried over from car1)
 ```
 
-✅ **Solution:** Return new builder instances or ensure proper isolation:
+The `Car` constructor copies values when `build()` is called, so `car1` is never affected. The problem is that `car2` silently inherits the year set for `car1`.
+
+✅ **Solution:** Create a fresh builder for each independent car:
 
 ```js
-class CarBuilder {
-  constructor(make, model) {
-    this.data = { make, model };
-  }
+const createBaseBuilder = () =>
+  new CarBuilder("Toyota", "Camry").setColor("Red").setEngine("V6");
 
-  setYear(year) {
-    // Create new builder with copied data to avoid mutation
-    const newBuilder = new CarBuilder(this.data.make, this.data.model);
-    newBuilder.data = { ...this.data, year };
-    return newBuilder;
-  }
-
-  build() {
-    return new Car(this.data);
-  }
-}
+const car1 = createBaseBuilder().setYear(2021).build();
+const car2 = createBaseBuilder().setColor("Blue").setYear(2022).build();
 ```
 
 ## Summary
