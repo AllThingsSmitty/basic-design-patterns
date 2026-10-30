@@ -206,7 +206,7 @@ class Coffee {
 }
 
 class MilkDecorator extends CoffeeDecorator {
-  // Only decorates cost(), but getDescription() and brew() are also needed!
+  // Inherits cost() and getDescription(), but CoffeeDecorator never forwards brew()
 }
 
 const coffee = new MilkDecorator(new Coffee());

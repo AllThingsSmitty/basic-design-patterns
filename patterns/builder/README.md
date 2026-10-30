@@ -183,16 +183,31 @@ build() {
 }
 ```
 
-❌ **Problem:** Reusing a mutable builder changes the values used by later builds.
+❌ **Problem:** Reusing a mutable builder carries stale values into later builds.
 
 ```js
-const builder = new CarBuilder("Toyota", "Camry").setColor("Red").setEngine("V6");
+const builder = new CarBuilder("Toyota", "Camry")
+  .setColor("Red")
+  .setEngine("V6");
 
 const car1 = builder.setYear(2021).build();
-const car2 = builder.setYear(2022).build(); // car1.year remains 2021; car2.year is 2022
+const car2 = builder.setColor("Blue").build();
+
+console.log(car1.toString()); // 2021 Toyota Camry in Red with a V6 engine (unchanged)
+console.log(car2.toString()); // 2021 Toyota Camry in Blue with a V6 engine (year carried over from car1)
 ```
 
-✅ **Solution:** Start a new builder when you need an independent construction sequence, or use an immutable builder API. The builder above intentionally mutates itself; its `Car` constructor copies the values when `build()` is called.
+The `Car` constructor copies values when `build()` is called, so `car1` is never affected. The problem is that `car2` silently inherits the year set for `car1`.
+
+✅ **Solution:** Create a fresh builder for each independent car:
+
+```js
+const createBaseBuilder = () =>
+  new CarBuilder("Toyota", "Camry").setColor("Red").setEngine("V6");
+
+const car1 = createBaseBuilder().setYear(2021).build();
+const car2 = createBaseBuilder().setColor("Blue").setYear(2022).build();
+```
 
 ## Summary
 

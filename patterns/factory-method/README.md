@@ -6,10 +6,10 @@ The Factory Method pattern lets a class defer instantiation to subclasses. It de
 
 ✅ **Use Factory Method for:**
 
-- Creating objects of different types based on conditions
+- Letting subclasses decide which concrete class to create
 - Hiding object creation logic from clients
 - Reducing coupling between classes
-- Centralizing object creation
+- Code that works with a product but shouldn't know its concrete class
 - When many similar objects need custom initialization
 
 ❌ **Avoid Factory Method for:**
@@ -17,6 +17,7 @@ The Factory Method pattern lets a class defer instantiation to subclasses. It de
 - Simple objects with just one type (use direct constructor)
 - Cases where a simple config object would work
 - When you don't have multiple types to create
+- When a single switch or lookup table would do (see Simple Factory below)
 
 ## Example
 
@@ -57,8 +58,13 @@ Similar to the `Car` class, the `Truck` class initializes a truck object with pr
 ```js
 // Creator class: subclasses decide which product to construct
 class VehicleFactory {
-  createVehicle() {
+  createVehicle(options) {
     throw new Error("Subclasses must implement createVehicle()");
+  }
+
+  // Uses the factory method without knowing which product it gets
+  describeNewVehicle(options) {
+    return this.createVehicle(options).describe();
   }
 }
 
@@ -77,7 +83,7 @@ class TruckFactory extends VehicleFactory {
 
 ## Explaining the code
 
-- `VehicleFactory` declares the factory method `createVehicle`.
+- `VehicleFactory` declares the factory method `createVehicle` and uses it in `describeNewVehicle` without knowing the concrete product.
 - `CarFactory` and `TruckFactory` override that method to construct their respective products.
 - Client code uses a concrete factory without deciding product construction through a type switch.
 
@@ -99,6 +105,9 @@ const truck = new TruckFactory().createVehicle({
 
 console.log(car.describe()); // new car with 4 doors in red
 console.log(truck.describe()); // used truck with 2 doors in black
+
+// The creator's own operation works with whichever product the subclass builds
+console.log(new CarFactory().describeNewVehicle({ color: "green" })); // brand new car with 4 doors in green
 ```
 
 ## Related Example: Simple Factory
@@ -133,16 +142,19 @@ console.log(viewer.permissions); // ["read"]
 ❌ **Problem:** Returning null for unknown types causes runtime errors downstream.
 
 ```js
-createVehicle(options) {
-  switch (options.vehicleType) {
-    case "car":
-      return new Car(options);
-    default:
-      return null; // Dangerous! Caller might call methods on null
+class SimpleVehicleFactory {
+  createVehicle(options) {
+    switch (options.vehicleType) {
+      case "car":
+        return new Car(options);
+      default:
+        return null; // Dangerous! Caller might call methods on null
+    }
   }
 }
 
 // Later:
+const factory = new SimpleVehicleFactory();
 const vehicle = factory.createVehicle({ vehicleType: "bike" });
 vehicle.describe(); // Crash: Cannot read property of null
 ```
@@ -150,12 +162,14 @@ vehicle.describe(); // Crash: Cannot read property of null
 ✅ **Solution:** Throw an error to fail fast and clearly:
 
 ```js
-createVehicle(options) {
-  switch (options.vehicleType) {
-    case "car":
-      return new Car(options);
-    default:
-      throw new Error(`Unknown vehicle type: ${options.vehicleType}`);
+class SimpleVehicleFactory {
+  createVehicle(options) {
+    switch (options.vehicleType) {
+      case "car":
+        return new Car(options);
+      default:
+        throw new Error(`Unknown vehicle type: ${options.vehicleType}`);
+    }
   }
 }
 ```
@@ -163,7 +177,7 @@ createVehicle(options) {
 ❌ **Problem:** Factory becomes bloated with too many types.
 
 ```js
-class VehicleFactory {
+class SimpleVehicleFactory {
   createVehicle(options) {
     switch (options.vehicleType) {
       case "car":
